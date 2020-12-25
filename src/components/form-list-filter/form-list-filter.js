@@ -1,12 +1,17 @@
 import React from 'react';
 
-const FormListFilter = () => {
-    return (
-        <div className='btn'>
-            <button>Short tasks</button>
-            <button>Long tasks</button>
-        </div>
-    )
-}
+export default class FormListFilter extends React.Component {
 
-export default FormListFilter;
+    render() {
+
+        const {addNewForm} = this.props;
+
+        return (
+            <div className='btn'>
+                <button>Short tasks</button>
+                <button>Long tasks</button>
+                <button onClick={addNewForm} >Add new task</button>
+            </div>
+        )
+    }
+}
