@@ -1,4 +1,5 @@
 import React from 'react';
+import './form-list-filter.css'
 
 export default class FormListFilter extends React.Component {
 
@@ -6,10 +7,11 @@ export default class FormListFilter extends React.Component {
         const {addNewForm, sortShort, sortLong} = this.props;
 
         return (
-            <div className='btn'>
-                <button onClick={sortShort} >Short tasks</button>
-                <button onClick={sortLong} >Long tasks</button>
-                <button onClick={addNewForm} >Add new task</button>
+            <div >
+                <h1>Welcome to my app</h1>
+                <button className='btn' onClick={sortShort} >Short tasks</button>
+                <button className='btn' onClick={sortLong} >Long tasks</button>
+                <button className='btn' onClick={addNewForm} >Add new task</button>
             </div>
         )
     }

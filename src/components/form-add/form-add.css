@@ -1,0 +1,76 @@
+.form {
+    height: 536px;
+    width: 373px;
+    background-color: seagreen;
+    text-align: center;
+    border: solid;
+}
+
+.form div {
+    padding: 3px;
+}
+
+.form .header {
+    font-size: 40px;
+    margin: auto;
+}
+
+.form div input {
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+}  
+
+.form div .error{
+    border: solid 1px red;
+}
+
+.form div .input-notify {
+    color: red;
+    font-size: 14px;
+}
+
+.form div label {
+    font-size: 20px;
+}
+
+.form div .description {
+    height: 30px;
+    font-size: 20px;
+}
+
+.form .select {
+    height: 50px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.form .select select {
+    border-radius: 5px;
+    width: 100px;
+    height: 30px;
+    font-size: medium;
+    font-weight: bolder;
+}
+
+.form button {
+    background-color: #674fd4;
+    color: #fff;
+    border: 2px solid #fff;
+    width: 50%;
+    margin-top: 25px;
+    padding: 8px 0px;
+    font-size: 1em;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    margin-bottom: 0.25em;
+    border-radius: 5px;
+}
+
+
+
+
+
+
+

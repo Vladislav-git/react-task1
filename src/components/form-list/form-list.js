@@ -7,7 +7,11 @@ const FormList = ({data, onDelete, onChange}) => {
     const tasks = data.map((item) => {
         return (
             <div key={item.id}>
-                <FormItem label={item} onDelete={() => onDelete(item.id)} onChange={() => onChange(item.id)}/>
+                <FormItem 
+                    label={item} 
+                    onDelete={() => onDelete(item.id)} 
+                    onChange={() => onChange(item.id)}
+                />
             </div>
         )
     })

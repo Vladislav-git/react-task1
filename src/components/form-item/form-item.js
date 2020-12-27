@@ -1,4 +1,5 @@
 import React from 'react';
+import './form-item.css'
 
 const convertTimeValue = (time) => {
     const obj = { '1':'1 hour',
@@ -18,14 +19,14 @@ export default class FormItem extends React.Component {
         return (
             <div className='item'>
                 <h3>{task_name}</h3>
-                <p>{firstname}</p>
-                <p>{secondname}</p>
-                <p>{email}</p>
-                <p>{convertTimeValue(deadeline)}</p>
-                <p>{description}</p>
+                <p><label>Firstname: </label>{firstname}</p>
+                <p><label>Secondname: </label>{secondname}</p>
+                <p><label>Email: </label>{email}</p>
+                <p><label>Deadline: </label>{convertTimeValue(deadeline)}</p>
+                <p><label>Task description: </label>{description}</p>
                 <div>
-                    <button type='button' onClick={onDelete}>del</button>
-                    <button type='button' onClick={onChange}>change</button>
+                    <button className='btn' type='button' onClick={onDelete}>del</button>
+                    <button className='btn' type='button' onClick={onChange}>change</button>
                 </div>
             </div>
         )

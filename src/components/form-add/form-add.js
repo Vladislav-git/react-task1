@@ -1,4 +1,5 @@
 import React from 'react';
+import './form-add.css';
 
 const default_model = {
     task_name: '',
@@ -10,143 +11,90 @@ const default_model = {
     id: 0
 };
 
-const defaultErrorClass = 'error';
+
+const formValid = ({errorForm, model}) => {
+    let valid = true;
+    Object.values(errorForm).forEach(val => {
+        val.length > 0 && (valid = false);
+    })
+    Object.values(model).forEach(val => {
+        val === null && (valid = false);
+    })
+    return valid;
+}
 
 export default class FormAdd extends React.Component {
 
         constructor(props) {
             super(props);
-            this.state = {model: default_model, 
-                form: {
-                    taskNameBlock: {
-                        errorClass: '',
-                        errorText: '',
-                    },
-                    firstNameBlock: {
-                        errorClass: '',
-                        errorText: '',
-                    },
-                    secondNameBlock: {
-                        errorClass: '',
-                        errorText: '',
-                    },
-                    emailBlock: {
-                        errorClass: '',
-                        errorText: '',
-                    },
-                    descriptionBlock: {
-                        errorClass: '',
-                        errorText: '',
-                    },
-
+            this.state = { model: default_model,
+                errorForm: {
+                    task_name: '',
+                    firstname: '',
+                    secondname: '',
+                    email: '',
+                    deadeline: '',
+                    description: '',
                 }};
-            this.onTaskNameChange = this.onTaskNameChange.bind(this);
-            this.onFirstNameChange = this.onFirstNameChange.bind(this);
-            this.onSecondNameChange = this.onSecondNameChange.bind(this);
-            this.onEmailChange = this.onEmailChange.bind(this);
-            this.onDescriptionChange = this.onDescriptionChange.bind(this);
-            this.onDeadlineChange = this.onDeadlineChange.bind(this);
         }
 
-        onTaskNameChange(event) {
-            const valueToChange = event.target.value;
-            const taskNameBlock = {errorClass: '', errorText: ''};
-            if (valueToChange.length < 2) {
-                taskNameBlock.errorClass = defaultErrorClass;
-                taskNameBlock.errorText = 'invalid taskname'
+        handleSubmit = (event) => {
+            event.preventDefault();
+            if (formValid(this.state)) {
+                const {model} = this.state
+                this.props.onChangeAdd(model)
+            } else {
+                console.error('error')
             }
-            this.setState({
-                model:{
-                    task_name: valueToChange,
-                },
-                form:{
-                    taskNameBlock: taskNameBlock,
-                }
-                
-            }, () => console.log(this.state))
+        }
+
+        handleChange = (event) => {
+            event.preventDefault();
+            const {name, value} = event.target;
+            let errorForm = this.state.errorForm;
             
-        }
-
-        onFirstNameChange(event) {
-            const valueToChange = event.target.value;
-            const firstNameBlock = {errorClass: '', errorText: ''};
-            if (valueToChange.length < 2) {
-                firstNameBlock.errorClass = defaultErrorClass;
-                firstNameBlock.errorText = 'invalid firstname'
+            switch (name) {
+                case 'task_name':
+                    errorForm.task_name = value.length < 3 
+                        ? '3 char req' 
+                        : '';
+                    break;
+                case 'firstname':
+                    errorForm.firstname = value.length < 3
+                        ? '3 char req' 
+                        : '';
+                    break;
+                case 'secondname':
+                    errorForm.secondname = value.length < 3
+                        ? '3 char req' 
+                        : '';
+                    break;
+                case 'email':
+                    errorForm.email = value.match(/[a-zA-z]+@[a-zA-Z]+?\.[a-zA-Z]{2,6}/) === null
+                        ? 'wrong email name'
+                        : '';
+                    break;
+                case 'deadline':
+                    errorForm.deadeline = value.length > 0
+                        ? ''
+                        : 'error';
+                    break;
+                case 'description':
+                    errorForm.description = value.length < 3
+                        ? '3 char req' 
+                        : '';
+                    break;
+                default:
+                    break;
             }
-            this.setState({
-                model:{
-                    firstname: valueToChange,
-                },
-                form:{
-                    firstNameBlock: firstNameBlock,
+            this.setState({errorForm, model: {
+                ...this.state.model,
+                [name]: value,
                 }
-                
             })
+            console.log(this.state)
         }
 
-        onSecondNameChange(event) {
-            const valueToChange = event.target.value;
-            const secondNameBlock = {errorClass: '', errorText: ''};
-            if (valueToChange.length < 2) {
-                secondNameBlock.errorClass = defaultErrorClass;
-                secondNameBlock.errorText = 'invalid secondname'
-            }
-            this.setState({
-                model:{
-                    secondname: valueToChange,
-                },
-                form:{
-                    secondNameBlock: secondNameBlock,
-                }
-                
-            })
-        }
-
-        onEmailChange(event) {
-            const valueToChange = event.target.value;
-            const emailBlock = {errorClass: '', errorText: ''};
-            if (valueToChange.match(/[a-zA-z]+@[a-zA-Z]+?\.[a-zA-Z]{2,6}/) === null) {
-                emailBlock.errorClass = defaultErrorClass;
-                emailBlock.errorText = 'invalid email'
-            }
-            this.setState({
-                model:{
-                    email: valueToChange,
-                },
-                form:{
-                    emailBlock: emailBlock,
-                }
-                
-            })
-        }
-
-        onDescriptionChange(event) {
-            const valueToChange = event.target.value;
-            const descriptionBlock = {errorClass: '', errorText: ''};
-            if (valueToChange.length < 2) {
-                descriptionBlock.errorClass = defaultErrorClass;
-                descriptionBlock.errorText = 'description must be 2+ chars'
-            }
-            this.setState({
-                model:{
-                    description: valueToChange,
-                },
-                form:{
-                    descriptionBlock: descriptionBlock,
-                }
-                
-            })
-        }
-
-        onDeadlineChange(event) {
-            const valueToChange = event.target.value;
-            this.setState({
-                model:{
-                    deadeline: valueToChange,
-                }
-            })
-        }
 
         componentDidMount() {
             if (this.props.data.id) {
@@ -163,28 +111,99 @@ export default class FormAdd extends React.Component {
         }
 
     render() {
-        const {task_name, firstname, secondname, email, deadeline, description} = this.state.model;
-        const {taskNameBlock, firstNameBlock, secondNameBlock, emailBlock, descriptionBlock} = this.state.form;
+        
+        const {errorForm, model} = this.state;
         
         return (
-            <form>
-                <h3>Add task</h3>
-                <p className={taskNameBlock.errorClass} >Task name: <input type='text' placeholder='task name' value={task_name} onChange={this.onTaskNameChange} /><span>{taskNameBlock.errorText}</span></p>
-                <p className={firstNameBlock.errorClass} >Firstname: <input type='text' placeholder='firstname' value={firstname} onChange={this.onFirstNameChange} /><span>{firstNameBlock.errorText}</span></p>
-                <p className={secondNameBlock.errorClass} >Secondname: <input type='text' placeholder='secondname' value={secondname} onChange={this.onSecondNameChange} /><span>{secondNameBlock.errorText}</span></p>
-                <p className={emailBlock.errorClass} >Email: <input type='text' placeholder='email' value={email} onChange={this.onEmailChange} /><span>{emailBlock.errorText}</span></p>
-                <p> Deadline:
-                    <select value={deadeline} onChange={this.onDeadlineChange}>
+            <form className='form' >
+                <h3 className='header'>Add task</h3>
+                <div>
+                    <label>Task name: </label>
+                    <input
+                        className={errorForm.task_name.length > 0 ? 'error' : null}
+                        value={model.task_name}
+                        type='text'
+                        placeholder='task name'
+                        name='task_name'
+                        onChange={this.handleChange}
+                    />
+                    {errorForm.task_name.length > 0 && (
+                        <div className='input-notify'>{errorForm.task_name}</div>
+                    )}
+                </div>
+                <div>
+                    <label>Firstname: </label>
+                    <input
+                        className={errorForm.firstname.length > 0 ? 'error' : null}
+                        value={model.firstname}
+                        type='text'
+                        placeholder='firstname'
+                        name='firstname'
+                        onChange={this.handleChange}
+                    />
+                    {errorForm.firstname.length > 0 && (
+                        <div className='input-notify'>{errorForm.firstname}</div>
+                    )}
+                </div>
+                <div>
+                    <label>Secondname: </label>
+                    <input
+                        className={errorForm.secondname.length > 0 ? 'error' : null}
+                        value={model.secondname}
+                        type='text'
+                        placeholder='secondname'
+                        name='secondname'
+                        onChange={this.handleChange}
+                    />
+                    {errorForm.secondname.length > 0 && (
+                        <div className='input-notify'>{errorForm.secondname}</div>
+                    )}
+                </div>
+                <div>
+                    <label>Email: </label>
+                    <input
+                        className={errorForm.email.length > 0 ? 'error' : null}
+                        value={model.email}
+                        type='text'
+                        placeholder='email'
+                        name='email'
+                        onChange={this.handleChange}
+                    />
+                    {errorForm.email.length > 0 && (
+                        <div className='input-notify'>{errorForm.email}</div>
+                    )}
+                </div>
+                <div className='select'>
+                    <label>Deadline: </label>
+                    <select name='deadeline' value={model.deadeline} onChange={this.handleChange}>
                         <option value='1'>1 hour</option>
                         <option value='3'>3 hours</option>
                         <option value='5'>5 hours</option>
                         <option value='24'>1 day</option>
                         <option value='48'>2 days</option>
                     </select>
-                </p>
-                <p className={descriptionBlock.errorClass} >Task description: <input type='text' placeholder='Description' value={description} onChange={this.onDescriptionChange} /><span>{descriptionBlock.errorText}</span></p>
-                
-                <button type="button" onClick={() => this.props.onChangeAdd(this.state.model)}>{this.state.id ? 'change' : 'add'}</button>
+                </div>
+                <div>
+                    <div className='description'>Task description: </div>
+                    <input
+                        className={errorForm.description.length > 0 ? 'error' : null}
+                        value={model.description}
+                        type='text'
+                        placeholder='Description'
+                        name='description'
+                        onChange={this.handleChange}
+                    />
+                    {errorForm.description.length > 0 && (
+                        <div className='input-notify'>{errorForm.description}</div>
+                    )}
+                </div>
+                <button
+                    className='btn-add-change'
+                    type="submit"
+                    onClick={this.handleSubmit}
+                >
+                    {this.state.model.id ? 'change' : 'add'}
+                </button>
             </form>
         )
     }

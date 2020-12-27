@@ -2,46 +2,7 @@ import React from 'react';
 import FormList from '../form-list/form-list';
 import FormListFilter from "../form-list-filter/form-list-filter";
 import FormAdd from "../form-add/form-add";
-
-const taskNameIsValid = (taskname) => {
-    if (taskname.match(/^[a-zA-Z0-9]{2,15}$/) !== null) {
-        return true
-    } else {
-        return false
-    }
-} 
-
-const firstNameIsValid = (firstname) => {
-    if (firstname.match(/^[a-zA-Z0-9]{2,20}$/) !== null) {
-        return true
-    } else {
-        return false
-    }
-} 
-
-const secondNameIsValid = (secondname) => {
-    if (secondname.match(/^[a-zA-Z0-9]{2,20}$/) !== null) {
-        return true
-    } else {
-        return false
-    }
-} 
-
-const emailIsValid = (email) => {
-    if (email.match(/[a-zA-z]+@[a-zA-Z]+?\.[a-zA-Z]{2,6}/) !== null) {
-        return true
-    } else {
-        return false
-    }
-} 
-
-const descriptionIsValid = (description) => {
-    if (description.match(/./) !== null) {
-        return true
-    } else {
-        return false
-    }
-} 
+import './app.css'
 
 export default class App extends React.Component {
 
@@ -76,7 +37,9 @@ export default class App extends React.Component {
 
     changeItem (id) {
         this.setState(({data}) => {
+            console.log(id)
             const dataToChange = {...data.find(elem => elem.id === id)};
+            console.log(dataToChange)
             return {
                 test: dataToChange || {},
                 isFormVisible: true,
@@ -149,11 +112,22 @@ export default class App extends React.Component {
     render () {
         return (
             <div className='app'>
-            <FormListFilter addNewForm={this.addNewForm} sortShort={this.sortShort} sortLong={this.sortLong}/>
-            <FormList data={this.state.data} onDelete={this.deleteItem} onChange={this.changeItem} />
-            {this.state.isFormVisible ? <FormAdd onChangeAdd={this.onChangeAdd} data={this.state.test}/> : null}
-
-        </div>
+                <FormListFilter
+                    addNewForm={this.addNewForm}
+                    sortShort={this.sortShort}
+                    sortLong={this.sortLong}
+                />
+                <FormList
+                    data={this.state.data}
+                    onDelete={this.deleteItem}
+                    onChange={this.changeItem}
+                />
+                {
+                    this.state.isFormVisible 
+                        ? <FormAdd onChangeAdd={this.onChangeAdd} data={this.state.test}/> 
+                        : null
+                }
+            </div>
         )
     }    
 
