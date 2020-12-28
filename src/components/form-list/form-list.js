@@ -8,7 +8,7 @@ const FormList = ({data, onDelete, onChange}) => {
         return (
             <div key={item.id}>
                 <FormItem 
-                    label={item} 
+                    data={item} 
                     onDelete={() => onDelete(item.id)} 
                     onChange={() => onChange(item.id)}
                 />

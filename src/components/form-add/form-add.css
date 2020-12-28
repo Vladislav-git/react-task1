@@ -1,5 +1,5 @@
 .form {
-    height: 536px;
+    height: 560px;
     width: 373px;
     background-color: seagreen;
     text-align: center;
@@ -17,7 +17,7 @@
 
 .form div input {
     width: 200px;
-    height: 50px;
+    height: 40px;
     font-size: 20px;
 }  
 
@@ -59,13 +59,12 @@
     color: #fff;
     border: 2px solid #fff;
     width: 50%;
-    margin-top: 25px;
-    padding: 8px 0px;
+    padding: 8px;
     font-size: 1em;
     font-weight: lighter;
     letter-spacing: 1px;
-    margin-bottom: 0.25em;
     border-radius: 5px;
+    margin: 6px;
 }
 
 
