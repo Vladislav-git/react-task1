@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import FormList from '../form-list/form-list';
-import FormListFilter from "../form-list-filter/form-list-filter";
-import FormAdd from "../form-add/form-add";
+import FormList from '../../components/form-list/form-list';
+import FormListFilter from "../../components/form-list-filter/form-list-filter";
+import FormAdd from "../../components/form-add/form-add";
 import './app.css'
 
 
