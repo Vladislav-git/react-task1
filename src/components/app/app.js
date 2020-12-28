@@ -19,18 +19,20 @@ export default function App () {
 
 
     const deleteItem = (id) => {
-        const index = state.findIndex(elem => elem.id === id)
-        const before = state.slice(0, index);
-        const after = state.slice(index + 1);
+        const index = state.data.findIndex(elem => elem.id === id)
+        const before = state.data.slice(0, index);
+        const after = state.data.slice(index + 1);
         const newArr = [...before, ...after];
         setState ({
+            ...state,
             data : newArr,
         })
     }
 
     const changeItem = (id) => {
-        const dataToChange = {...state.find(elem => elem.id === id)};
+        const dataToChange = {...state.data.find(elem => elem.id === id)};
         setState ({
+            ...state,
             test: dataToChange || {},
             isFormVisible: true,
         })
@@ -38,6 +40,7 @@ export default function App () {
 
     const addNewForm = () => {
         setState({
+            ...state,
             test: {},
             isFormVisible: true,
         })
@@ -45,18 +48,20 @@ export default function App () {
 
     const onChangeAdd = (data) => {
         if (data.id) {
-            const index = state.findIndex(elem => elem.id === data.id)
-            const before = state.slice(0, index);
-            const after = state.slice(index + 1);
+            const index = state.data.findIndex(elem => elem.id === data.id)
+            const before = state.data.slice(0, index);
+            const after = state.data.slice(index + 1);
             
             const newArr = [...before, data, ...after];
             setState ({
+                ...state,
                 data : newArr,
                 isFormVisible: false, 
             })
         } else {
             const newArr = [...state.data, {...data, id: Math.random()}];
             setState ({
+                ...state,
                 data : newArr,
                 isFormVisible: false,
             })
@@ -72,6 +77,7 @@ export default function App () {
             }
         })
         setState({
+            ...state,
             data : sortedData
         })
         
@@ -86,6 +92,7 @@ export default function App () {
             }
         })
         setState({
+            ...state,
             data : sortedData
         })
     }

@@ -213,7 +213,7 @@ const formValid = ({errorForm, model}) => {
 
 
 
-export default function FormAdd (data, onChangeAdd) {
+export default function FormAdd ({data, onChangeAdd}) {
 
     const initialState = { model: default_model,
         errorForm: {
@@ -277,18 +277,24 @@ export default function FormAdd (data, onChangeAdd) {
             default:
                 break;
         }
-        setState({errorForm, model: {
-            ...state.model,
-            [name]: value,
+        setState({
+            ...state,
+            errorForm, 
+            model: {
+                ...state.model,
+                [name]: value,
             }
         })
     }
 
     useEffect(() => {
         if (data.id) {
-            setState({model: data})
+            setState({
+                ...state,
+                model: data
+            })
         }
-    })
+    },[state])
 
         //         componentDidMount() {
         //             if (this.props.data.id) {
